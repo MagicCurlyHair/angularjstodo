@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./css/index.css" type="text/css">
+    <script src="/node_modules/angular/angular.js"></script>
+    <script src="./js/todosModel.js"></script>
+    <script src="./js/todosView.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+    <title>Angular</title>
+</head>
+<body>
+    <div class="todos-wrapper" ng-app="todosView" ng-controller="todosController as todos">
+        <h2>Todo List</h2>
+        <ul class="todo-list">
+            <li ng-repeat="todo in todos.todos">
+                <div class="todo" ng-if="todo !== todos.selectedTodo" ng-click="todos.selectTodo(todo)">
+                    <span>{{ todo }}</span>
+                    <button ng-click="todos.removeTodo($event, todo)">Remove</button>
+                </div>
+                <div ng-if="todo === todos.selectedTodo">
+                    <form class="form form__edit" ng-submit="todos.renameTodo(todo, todos.selectedNewName)">
+                        <input ng-model="todos.selectedNewName" placeholder="Todo" />
+                        <button type="submit">Submit</button>
+                        <button ng-click="todos.selectTodo('')" type="button">Cancel</button>
+                    </form>
+                </div>
+            </li>
+        </ul>
+        <form class="form" ng-submit="todos.addTodo($event)">
+            <input ng-model="todos.newTodo" placeholder="New Todo" />
+            <button type="submit">Add Todo</button>
+        </form>
+    </div>
+</body>
+</html>
